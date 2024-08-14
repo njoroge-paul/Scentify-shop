@@ -1,20 +1,20 @@
 function SearchBar() {
   return (
-    <div className="flex justify-center mt-4 mb-4 ">
-      <form className="flex  items-center ">
+    <div className="flex justify justify-center mt-4 mb-4 ">
+      <form className="flex  items-center justify-between gap-6 ">
         <input
           type="search"
           placeholder="Search..."
-          className="search-input p-2 border-[#1F5AE0] border-2 placeholder:text-center rounded w-full  "
+          className="search-input p-2 border-[#1F5AE0] border-2 placeholder:text-center rounded md:w-[50rem] hover:w-[40rem] ease-in-out duration-1000  hover:border-[#E01FBB] "
         />
-        <button type="submit" className="  search-button">
+        <button type="submit" className=" hover: search-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="size-6 text-[#1FE045]"
+            className="size-6 text-[#1FE045] hover:text-[#1F5AE0] "
           >
             <path
               strokeLinecap="round"
