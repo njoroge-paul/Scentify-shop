@@ -1,62 +1,94 @@
-function Content(){
+import { perfumes } from './data';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function Content() {
+  const Navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(Infinity);
+
+  const filteredPerfumes = perfumes.filter(perfume => {
+    const name = perfume.name.toLowerCase();
+    const description = perfume.description.toLowerCase();
+    const query = searchQuery.toLowerCase();
+    const price = perfume.price;
+
     return (
-        <div className="bg-[#F5F5F5] h-auto sm:mr-6 sm:ml-6 flex-grow " >
-        
-           <div className=" grid grid-cols-3 gap-4 border-spacing-2 p-8 sm:flex-grow flex-wrap border-[#E01FBB] border-2 overflow-y-auto ">
-           {/* cards */}
-             <div className="flex flex-col items-center p-8 bg-white text-white" >
-              <img src="https://cdn.pixabay.com/photo/2017/10/03/12/07/bottle-2812214_1280.jpg" className="sm:h-50 sm:w-full" alt=""/>
-              <h1>Hello World!</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ju.</p>
-              <button  className="rounded bg-[#1FE045] mt-3 sm:w-[40%] p-2">Purchase</button>
-             </div>
+      (name.includes(query) || description.includes(query)) &&
+      price >= minPrice &&
+      price <= maxPrice
+    );
+  });
 
-             <div className="sm:flex flex-col items-center p-8 bg-white text-white" >
-              <img src="https://cdn.pixabay.com/photo/2015/03/18/05/19/perfume-678828_960_720.jpg" className="sm:h-50 sm:w-full" alt=""/>
-              <h1>Hello World!</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ju.</p>
-              <button  className="rounded bg-[#1FE045] mt-3 sm:w-[40%] p-2">Purchase</button>
-             </div>
+  const handleAddToCart=(perfume)=>{
+    Navigate('/AddToCart.jsx',{state:perfume})
+  }
 
-             <div className="sm:flex flex-col items-center p-8 bg-white text-white" >
-              <img src="https://cdn.pixabay.com/photo/2017/03/14/11/39/perfume-2142817_1280.jpg" className="sm:h-50 sm:w-full" alt=""/>
-              <h1>Hello World!</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ju.</p>
-              <button  className="rounded bg-[#1FE045] mt-3 sm:w-[40%] p-2">Purchase</button>
-             </div>
+  return (
+    <div className="bg-[#F5F5F5] h-auto sm:mr-6 sm:ml-6 flex-grow">
+      <div className="flex justify-center mt-4 mb-4 sm:mx-6 md:mx-8 lg:mx-12 xl:mx-16">
+        <form className="flex items-center justify-between mt-6 gap-6 lg:gap-8 xl:gap-10">
+          <input
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            type="search"
+            placeholder="Search..."
+            className="search-input lg:p-2 xl:p-3 border-[#1F5AE0] border-2 placeholder:text-center rounded sm:w-[100%] md:w-[80%] lg:w-[60%] xl:w-[50%] hover:w-[40rem] ease-in-out duration-1000 hover:border-[#E01FBB]"
+          />
+          <div className="flex flex-col">
+            <label>Min Price:</label>
+            <input
+              type="number"
+              value={minPrice}
+              onChange={e => setMinPrice(e.target.valueAsNumber)}
+              className="w-full p-2 border-[#1F5AE0] border-2 rounded"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label>Max Price:</label>
+            <input
+              type="number"
+              value={maxPrice}
+              onChange={e => setMaxPrice(e.target.valueAsNumber)}
+              className="w-full p-2 border-[#1F5AE0] border-2 rounded"
+            />
+          </div>
+          <button type="submit" className="hover:search-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6 text-[#1FE045] hover:text-[#1F5AE0]"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
 
-             <div className="sm:flex flex-col items-center p-8 bg-white text-white" >
-              <img src="https://cdn.pixabay.com/photo/2013/12/12/06/10/perfume-227100_1280.jpg" className="sm:h-50 sm:w-full" alt=""/>
-              <h1>Hello World!</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel justo ac ex rutrum consectetur in nec arcu. Sed vel justo ac ex rutrum consectetur in nec arcu.</p>
-              <button  className="rounded bg-[#1FE045] mt-3 sm:w-[40%] p-2">Purchase</button>
-             </div>
-
-             <div className="sm:flex flex-col items-center p-8 bg-white text-white" >
-              <img src="https://cdn.pixabay.com/photo/2018/05/13/18/06/scent-of-roses-3397281_1280.jpg" className="sm:h-50 sm:w-full" alt=""/>
-              <h1>Hello World!</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel justo ac ex rutrum consectetur in nec arcu. Sed vel justo ac ex rutrum consectetur in nec arcu.</p>
-              <button  className="rounded bg-[#1FE045] mt-3 sm:w-[40%]  p-2">Purchase</button>
-             </div>
-
-             <div className="sm:flex flex-col items-center p-8 bg-white text-white" >
-              <img src="https://cdn.pixabay.com/photo/2017/04/18/14/35/perfume-2239285_1280.jpg" className="sm:h-50 sm:w-full" alt=""/>
-              <h1>Hello World!</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel justo ac ex rutrum consectetur in nec arcu. Sed vel justo ac ex rutrum consectetur in nec arcu.</p>
-              <button  className="rounded bg-[#1FE045] mt-3 sm:w-[40%] p-2">Purchase</button>
-             </div>
-
-
-
-
-
-
-             
-
-             
-             
-           </div>
-        </div>
-    )
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-spacing-2 p-8 sm:flex-grow flex-wrap border-[#E01FBB] border- overflow-x-auto">
+        {filteredPerfumes.map(perfume => (
+          <div key={perfume.id} className="flex flex-col items-center p-8 bg-white text-gray-800">
+            <img src={perfume.image} className="sm:h-50 sm:w-full" alt="" />
+            <h1>{perfume.name}</h1>
+            <p>{perfume.description}</p>
+            <button 
+             onClick={() => handleAddToCart(perfume)}
+             className="rounded bg-[#1FE045] mt-3 sm:w-[50%] md:[25%] lg:w-[40%] p-2">
+              Purchase (${perfume.price})
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
+
 export default Content;
